@@ -1,6 +1,7 @@
-from sqlalchemy import Integer, String, Column, Boolean, DateTime
+from sqlalchemy import Integer, String, Column, Boolean, DateTime, Float, ForeignKey
 from database import Base
 import datetime
+from sqlalchemy.orm import relationship
 
 
 class User(Base):
@@ -14,6 +15,8 @@ class User(Base):
 
     token = Column(String, default=None)
     restore_token = Column(String, default=None)
+    wallets = relationship("Wallet", back_populates="user")
+
 
 class UserLoggin(Base):
     __tablename__ = "app_user_loggin"
@@ -22,4 +25,13 @@ class UserLoggin(Base):
     email = Column(String, index=True)
     created_at = Column(DateTime,)
 
-    
+
+class Wallet(Base):
+    __tablename__ = "app_wallets"
+
+    id = Column(Integer, primary_key=True, index=True)
+    balance = Column(Float)
+    currency = Column(String, default="USD")
+    user_id = Column(Integer, ForeignKey("app_users.id"))
+
+    user = relationship("User", back_populates="wallets")

@@ -5,22 +5,17 @@ from sqlalchemy.orm import Session
 
 import models
 import schemas
+import crud
+from db import get_db 
 
 from sqlalchemy.exc import IntegrityError
 from helpers import generate_token
 import datetime
+from auth_service import user_auth
 
 
 models.Base.metadata.create_all(bind=engine)
 
-
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 app = FastAPI()
@@ -154,3 +149,15 @@ def restore_account(
     return {
         'status': True,
     }
+
+
+@app.post("/wallet", response_model=schemas.WalletCreate)
+async def create_wallet(
+        wallet: schemas.WalletCreate, 
+        db: Session = Depends(get_db),
+        user = Depends(user_auth),  # noqa: inject user to check auth
+    ):
+
+    wallet.user_id = user.id
+
+    return crud.create_wallet(db=db, wallet=wallet)

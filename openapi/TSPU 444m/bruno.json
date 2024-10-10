@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "TSPU 444m",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

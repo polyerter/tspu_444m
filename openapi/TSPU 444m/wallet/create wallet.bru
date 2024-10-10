@@ -1,0 +1,23 @@
+meta {
+  name: create wallet
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/wallet
+  body: json
+  auth: none
+}
+
+headers {
+  Token: 64ce9044c4e3742d59996febd2b581f5
+}
+
+body:json {
+  {
+    "wallet_id": 1,
+    //ser_id": 1,
+    "currency": "usd"
+  }
+}

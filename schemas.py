@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 
 
@@ -11,5 +12,5 @@ class UserCreate(UserBase):
 
 
 class WalletCreate(BaseModel):
-    user_id: int | None = None
+    user_id: Optional[int] = None
     currency: str

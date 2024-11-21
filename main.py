@@ -13,10 +13,15 @@ from helpers import generate_token
 import datetime
 from auth_service import user_auth
 
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 models.Base.metadata.create_all(bind=engine)
 
-
+token = os.getenv('TOKEN')
 
 app = FastAPI()
 

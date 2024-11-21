@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import status, HTTPException, Depends
 
 from fastapi.security import (
@@ -20,7 +21,7 @@ async def get_user_by_token(token: str):
 
 
 async def user_auth(
-        api_key: APIKeyHeader | None = Depends(api_key_header),
+        api_key: Optional[APIKeyHeader] = Depends(api_key_header),
 ):
     if not api_key:
         raise HTTPException(
